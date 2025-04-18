@@ -16,7 +16,6 @@ extern void dgeev_(char* jobvl, char* jobvr, int* n, double* a, int* lda,
 int main() {
     const double t = 0.0;
     const double pres = 101325.0;
-    // const int n_states = N_SPECIES+1;
     
     // mass fraction H2:O2 phi 1.0
     double y[N_STATES] = {
