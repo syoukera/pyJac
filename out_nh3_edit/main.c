@@ -3,7 +3,7 @@
 #include "jacob.h"
 
 #define N_SPECIES 33
-#define N_STATES N_SPECIES+1
+#define N_STATES 34
 
 // LAPACK関数のプロトタイプ宣言
 extern void dgeev_(char* jobvl, char* jobvr, int* n, double* a, int* lda, 
