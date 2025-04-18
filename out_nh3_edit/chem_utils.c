@@ -4,11 +4,7 @@
 void eval_conc (const double T, const double pres, const double * __restrict__ y, double * __restrict__ y_N, double * __restrict__ mw_avg, double * __restrict__ rho, double * __restrict__ conc) {
 
   // mass fraction of final species
-  *y_N = 1.0 - (y[0] + y[1] + y[2] + y[3] + y[4] + y[5] + y[6] + y[7] + y[8]
-                + y[9] + y[10] + y[11] + y[12] + y[13] + y[14] + y[15] + y[16]
-                + y[17] + y[18] + y[19] + y[20] + y[21] + y[22] + y[23]
-                + y[24] + y[25] + y[26] + y[27] + y[28] + y[29] + y[30]
-                + y[31]);
+  *y_N = y[32];
   *mw_avg = (y[0] * 2.4983760555638834e-01) + (y[1] * 2.5032542304996495e-02)
       + (y[2] * 4.9606127348850126e-01) + (y[3] * 3.1251171918946961e-02)
       + (y[4] * 9.9212254697700253e-01) + (y[5] * 6.2502343837893923e-02)
@@ -24,7 +20,8 @@ void eval_conc (const double T, const double pres, const double * __restrict__ y
       + (y[24] * 2.1270495185636118e-02) + (y[25] * 2.1270495185636118e-02)
       + (y[26] * 1.6127747240784363e-02) + (y[27] * 1.5869771386421316e-02)
       + (y[28] * 3.3300743006177955e-02) + (y[29] * 3.3300743006177955e-02)
-      + (y[30] * 3.1205882683356403e-02) + (y[31] * 3.2219297426000326e-02) + ((*y_N) * 3.5697100110375433e-02);
+      + (y[30] * 3.1205882683356403e-02) + (y[31] * 3.2219297426000326e-02)
+      + (y[32] * 3.5697100110375433e-02);
   *mw_avg = 1.0 / *mw_avg;
   // mass-averaged density
   *rho = pres * (*mw_avg) / (8.31446210e+03 * T);
@@ -60,18 +57,14 @@ void eval_conc (const double T, const double pres, const double * __restrict__ y
   conc[29] = (*rho) * y[29] * 3.3300743006177955e-02;
   conc[30] = (*rho) * y[30] * 3.1205882683356403e-02;
   conc[31] = (*rho) * y[31] * 3.2219297426000326e-02;
-  conc[32] = (*rho) * (*y_N) * 3.5697100110375433e-02;
+  conc[32] = (*rho) * y[32] * 3.5697100110375433e-02;
 
 } // end eval_conc
 
 void eval_conc_rho (const double T, const double rho, const double * __restrict__ y, double * __restrict__ y_N, double * __restrict__ mw_avg, double * __restrict__ pres, double * __restrict__ conc) {
 
   // mass fraction of final species
-  *y_N = 1.0 - (y[0] + y[1] + y[2] + y[3] + y[4] + y[5] + y[6] + y[7] + y[8]
-                + y[9] + y[10] + y[11] + y[12] + y[13] + y[14] + y[15] + y[16]
-                + y[17] + y[18] + y[19] + y[20] + y[21] + y[22] + y[23]
-                + y[24] + y[25] + y[26] + y[27] + y[28] + y[29] + y[30]
-                + y[31]);
+  *y_N = y[32];
   *mw_avg = (y[0] * 2.4983760555638834e-01) + (y[1] * 2.5032542304996495e-02)
       + (y[2] * 4.9606127348850126e-01) + (y[3] * 3.1251171918946961e-02)
       + (y[4] * 9.9212254697700253e-01) + (y[5] * 6.2502343837893923e-02)
@@ -87,7 +80,8 @@ void eval_conc_rho (const double T, const double rho, const double * __restrict_
       + (y[24] * 2.1270495185636118e-02) + (y[25] * 2.1270495185636118e-02)
       + (y[26] * 1.6127747240784363e-02) + (y[27] * 1.5869771386421316e-02)
       + (y[28] * 3.3300743006177955e-02) + (y[29] * 3.3300743006177955e-02)
-      + (y[30] * 3.1205882683356403e-02) + (y[31] * 3.2219297426000326e-02) + ((*y_N) * 3.5697100110375433e-02);
+      + (y[30] * 3.1205882683356403e-02) + (y[31] * 3.2219297426000326e-02) 
+      + (y[32] * 3.5697100110375433e-02);
   *mw_avg = 1.0 / *mw_avg;
   // pressure
   *pres = rho * 8.31446210e+03 * T / (*mw_avg);
@@ -123,7 +117,7 @@ void eval_conc_rho (const double T, const double rho, const double * __restrict_
   conc[29] = rho * y[29] * 3.3300743006177955e-02;
   conc[30] = rho * y[30] * 3.1205882683356403e-02;
   conc[31] = rho * y[31] * 3.2219297426000326e-02;
-  conc[32] = rho * (*y_N) * 3.5697100110375433e-02;
+  conc[32] = rho * y[32] * 3.5697100110375433e-02;
 
 } // end eval_conc
 
