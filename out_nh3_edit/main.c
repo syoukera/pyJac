@@ -30,22 +30,23 @@ int main() {
        0.00000000e+00, 7.38305530e-01
     };
         
-    double jac[N_STATES*N_STATES] = {0.0};
+    double jac[N_SPECIES*N_SPECIES] = {0.0};
+    double jac_lapack[N_STATES*N_STATES] = {0.0};
     
     // 固有値計算用の変数
-    double wr[N_SPECIES], wi[N_SPECIES];  // 実部と虚部
-    double vl[N_SPECIES * N_SPECIES];  // 左固有ベクトル（不要ならNULLでも可）
-    double vr[N_SPECIES * N_SPECIES];  // 右固有ベクトル（不要ならNULLでも可）
-    int lwork = 4 * N_SPECIES;  // 作業配列のサイズ
-    double work[4 * N_SPECIES];  // 作業配列
+    double wr[N_STATES], wi[N_STATES];  // 実部と虚部
+    double vl[N_STATES * N_STATES];  // 左固有ベクトル（不要ならNULLでも可）
+    double vr[N_STATES * N_STATES];  // 右固有ベクトル（不要ならNULLでも可）
+    int lwork = 4 * N_STATES;  // 作業配列のサイズ
+    double work[4 * N_STATES];  // 作業配列
     int info;
     
     char jobvl = 'N';  // 左固有ベクトルは計算しない
     char jobvr = 'N';  // 右固有ベクトルは計算しない
-    int n = N_SPECIES;
-    int lda = N_SPECIES;
-    int ldvl = N_SPECIES;
-    int ldvr = N_SPECIES;
+    int n = N_STATES;
+    int lda = N_STATES;
+    int ldvl = N_STATES;
+    int ldvr = N_STATES;
 
     printf("Calling eval_jacob...\n");
     
@@ -63,13 +64,20 @@ int main() {
         // printf("\n");
     }
     printf("\n");
+    
+    // assign value to jac_lapack
+    for (int i = 0; i < N_SPECIES; i++) {
+        for (int j = 0; j < N_SPECIES; j++) {
+            jac_lapack[i*N_STATES + j] = jac[i*N_SPECIES + j];
+        }
+    }
 
     // LAPACK の dgeev を呼び出し（ヤコビアンの固有値を計算）
-    dgeev_(&jobvl, &jobvr, &n, jac, &lda, wr, wi, vl, &ldvl, vr, &ldvr, work, &lwork, &info);
+    dgeev_(&jobvl, &jobvr, &n, jac_lapack, &lda, wr, wi, vl, &ldvl, vr, &ldvr, work, &lwork, &info);
     
     if (info == 0) {
         printf("固有値（実部 虚部）:\n");
-        for (int i = 0; i < N_SPECIES; i++) {
+        for (int i = 0; i < N_STATES; i++) {
             printf("%e + %ei\n", wr[i], wi[i]);
         }
     } else {
