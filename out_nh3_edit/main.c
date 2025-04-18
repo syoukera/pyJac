@@ -3,6 +3,7 @@
 #include "jacob.h"
 
 #define N_SPECIES 33
+#define N_STATES N_SPECIES+1
 
 // LAPACK関数のプロトタイプ宣言
 extern void dgeev_(char* jobvl, char* jobvr, int* n, double* a, int* lda, 
@@ -15,9 +16,10 @@ extern void dgeev_(char* jobvl, char* jobvr, int* n, double* a, int* lda,
 int main() {
     const double t = 0.0;
     const double pres = 101325.0;
+    // const int n_states = N_SPECIES+1;
     
     // mass fraction H2:O2 phi 1.0
-    double y[N_SPECIES] = {
+    double y[N_STATES] = {
        1.00000000e+03, 0.00000000e+00, 0.00000000e+00, 0.00000000e+00,
        1.96270854e-01, 0.00000000e+00, 0.00000000e+00, 0.00000000e+00,
        0.00000000e+00, 0.00000000e+00, 0.00000000e+00, 0.00000000e+00,
@@ -26,10 +28,10 @@ int main() {
        0.00000000e+00, 0.00000000e+00, 0.00000000e+00, 0.00000000e+00,
        0.00000000e+00, 0.00000000e+00, 0.00000000e+00, 0.00000000e+00,
        0.00000000e+00, 0.00000000e+00, 0.00000000e+00, 0.00000000e+00,
-       0.00000000e+00
+       0.00000000e+00, 7.38305530e-01
     };
         
-    double jac[N_SPECIES*N_SPECIES] = {0.0};
+    double jac[N_STATES*N_STATES] = {0.0};
     
     // 固有値計算用の変数
     double wr[N_SPECIES], wi[N_SPECIES];  // 実部と虚部
@@ -54,8 +56,8 @@ int main() {
 
     // 結果を表示
     printf("Output values: ");
-    for (int i = 0; i < N_SPECIES; i++) {
-        printf("%e ", jac[i + i*N_SPECIES]);
+    for (int i = 0; i < N_STATES; i++) {
+        printf("%e ", jac[i + i*N_STATES]);
         // for (int j = 0; j < N_SPECIES; j++) {
         //     printf("%e ", jac[i + j*N_SPECIES]);
         // }
