@@ -55,16 +55,20 @@ int main() {
     printf("eval_jacob finished.\n");
 
     // 結果を表示
-    printf("Output values: ");
-    for (int i = 0; i < N_STATES; i++) {
-        printf("%e ", jac[i + i*N_STATES]);
-        // for (int j = 0; j < N_SPECIES; j++) {
-        //     printf("%e ", jac[i + j*N_SPECIES]);
-        // }
-        // printf("\n");
+    int i_states = 0;
+
+    printf("ith column: ");
+    for (int i = 0; i < N_SPECIES; i++) {
+        printf("%e ", jac[i*N_SPECIES + i_states]);
     }
     printf("\n");
     
+    printf("ith row: ");
+    for (int i = 0; i < N_SPECIES; i++) {
+        printf("%e ", jac[i_states*N_SPECIES + i]);
+    }
+    printf("\n");
+
     // assign value to jac_lapack
     for (int i = 0; i < N_SPECIES; i++) {
         for (int j = 0; j < N_SPECIES; j++) {
